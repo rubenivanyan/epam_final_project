@@ -1,0 +1,39 @@
+---
+# tasks file for java
+    - name: "install required soft (net-tools, python3, java)"
+      apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 40000
+        name: '{{ item }}'
+        state: 'present'
+      become: true  
+      loop: '{{  program_list }}'
+    - name: "Get the hosts username"
+      become: 'false'
+      local_action: 'command whoami'
+      register: 'user'
+    - name: 'copy ServiceTwo files'
+      copy:
+        src: "/home/{{ user.stdout }}/epam_final_project/project_samples/service-two/{{item}}"
+        dest: "/home/ubuntu/service-two"
+      loop: '{{ app2 }}'
+    - name: "copy template"
+      copy: 
+        src: "/home/{{ user.stdout }}/epam_final_project/temp/{{item}}"
+        dest: "/home/ubuntu/"
+        mode: '0660'
+      loop: '{{ copyfile }}'
+    - name: "copy user_data_script"
+      copy: 
+        src: "/home/{{ user.stdout }}/epam_final_project/project_build/scripts/{{item}}"
+        dest: "/home/ubuntu/"
+        mode: '0770'
+      loop: '{{ script }}'
+    - name: 'copy service'
+      copy: 
+        src: "/home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/{{item}}"
+        dest: "/etc/systemd/system/"
+      loop: '{{services}}'
+      become: true 
+...

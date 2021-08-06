@@ -1,0 +1,29 @@
+---
+- hosts: 'tag_Name_Consul'
+  roles: 
+    - role: 'consul'
+      tags: consul
+- hosts: 'tag_Name_RabbitMQ'   
+  roles: 
+    - role: 'rabbitmq' 
+      tags: mq
+- hosts: 'tag_Name_ServiceOne'
+  roles:
+    - role: 'java'
+      tags: s1
+    - role: 'mongodb' #config
+      tags: s1
+- hosts: 'tag_Name_ServiceTwo'
+  roles:
+    - role: 'java_sv2'
+      tags: s2
+- hosts: 'tag_Name_ApiGateway'
+  roles:
+    - role: 'apigateway'
+      tags: api
+- hosts: tag_Name_WebApp
+  roles:
+    - role: 'web-application'
+      tags: webap
+  
+...

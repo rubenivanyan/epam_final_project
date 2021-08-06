@@ -1,0 +1,37 @@
+---
+    - name: "Get the hosts username"
+      become: false
+      local_action: "command whoami"
+      register: 'user'
+    - name: "add key"
+      apt_key:
+        url: "{{ mongokeypath }}"
+        state: present
+      become: true
+    - name: "add_repo"
+      apt_repository:
+        repo: "{{ debrepo }}"
+        filename: "/etc/apt/sources.list.d/mongodb-org-4.4.list"
+        update_cache: true
+        state: present
+      become: true
+    - name: "Install mongodb"
+      apt:
+        name: "mongodb-org"
+      become: true
+    - name: "Copy Config File"
+      copy:
+        src: "/home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/mongod.conf"
+        dest: "/etc/mongod.conf"
+      become: true
+    - name: "Reload daemon"
+      shell:
+          "systemctl daemon-reload"
+      become: true
+    - name: "Check status mongodb's service"
+      systemd: 
+        name: "mongod"
+        state: started
+        enabled: true
+      become: true
+...

@@ -1,0 +1,15 @@
+---
+# vars file for web-application
+user: ''
+app:
+  - e2e
+  - src
+  - angular.json
+  - browserslist
+  - karma.conf.js
+  - package-lock.json
+  - package.json
+  - tsconfig.app.json
+  - tsconfig.json
+  - tsconfig.spec.json
+  - tslint.json

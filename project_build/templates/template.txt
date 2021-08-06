@@ -1,0 +1,4 @@
+serviceone.template
+servicetwo.template
+api.template
+constants.template

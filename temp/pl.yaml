@@ -1,0 +1,8 @@
+- hosts: tag_Name_Mongo_db
+  tasks: 
+    - name: 'copy ServiceOne files'
+      copy:
+         src: /home/ruben/Downloads/Consuldemo.pem
+         dest: /home/ubuntu/
+         mode: '400'
+    

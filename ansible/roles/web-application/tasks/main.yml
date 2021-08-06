@@ -1,0 +1,80 @@
+---
+    - name: "Get the hosts username"
+      become: false
+      local_action: 'command whoami'
+      register: 'user'
+    - name: "install net-tools"
+      apt:
+        name: "net-tools"
+        state: present
+        update_cache: true
+      become: true
+    - name: "copy project files"
+      copy:
+        src: /home/{{ user.stdout }}/epam_final_project/project_samples/web-application/{{item}}
+        dest: /home/ubuntu/web-application 
+      loop: '{{ app }}'  
+    - name: "Copy webapp_proj_api_gateway_config"
+      copy:
+        src: /home/{{ user.stdout }}/epam_final_project/temp/constants.ts
+        dest: /home/ubuntu/web-application/src/app
+        mode: '774'
+      become: true
+    - name: "copy script"
+      copy :
+        src: /home/{{ user.stdout }}/epam_final_project/project_build/scripts/webapp.sh
+        dest: /home/ubuntu/web-application/
+        mode: '774'
+      become: true
+    - name: "Copy service"
+      copy:
+        src: /home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/web-app.service
+        dest: /lib/systemd/system
+      become: true
+    - name: "install npm package manager"
+      apt:
+        name: "npm"
+        state: present
+        update_cache: true
+      become: true
+    - name: "Prepare for installation"
+      shell: "cd /home/ubuntu/web-application/"
+      become: true 
+    - name: "update & upgrade"
+      shell: "apt update -y && apt upgrade -y"
+      become: true 
+    - name: "Clear npm cache"
+      shell : npm install
+      become: true
+    - name: "Clear npm cache"
+      shell:
+        npm cache clean -f
+      become: true
+    - name: "Install n"
+      npm:
+        name: "n"
+        global: yes
+        state: "present"
+      become: true
+    - name: "Makes version-management easy"
+      shell:
+        n stable
+      become: true
+    - name: "Install angularCLI"
+      command: "echo n | npm install -g --silent @angular/cli@12.1.4"
+      become: true
+    - name: "Copy service"
+      copy:
+        src: /home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/web-app.service
+        dest: /lib/systemd/system
+      become: true
+    - name: "Reload daemon"
+      shell: "systemctl daemon-reload"
+      become: true
+    - name: "Start service"
+      systemd:
+        state: started
+        name: web-app.service
+        enabled: true
+      become: true  
+...

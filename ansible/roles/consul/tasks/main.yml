@@ -1,0 +1,59 @@
+---
+    - name: "Get the hosts username"
+      become: false
+      local_action: 'command whoami'
+      register: 'user'
+    - name: "install required soft consul"
+      apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 40000
+        name: 'consul'
+        state: present
+      become: true  
+    - name: "Add key"
+      apt_key:
+        url: "{{consulkeypath}}"
+        state: present 
+      become: true
+    - name: "add_repo"
+      apt_repository:
+        repo: "{{debrepo}}"
+        filename: "/etc/apt/sources.list"
+        update_cache: true
+        state: present
+      become: true
+    - name: "Stop service"
+      systemd:
+        state: stopped
+        name: consul.service
+      become: true  
+    - name: "copy consul service file"
+      copy:
+        src: "/home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/consul.service"
+        dest: "/etc/systemd/system/consul.service"
+      become: true
+    - name: "Delete lib service ctl"
+      file: 
+          path: "/lib/systemd/system/consul.service"
+          state: absent
+      become: true
+    - name: "Reload daemon"
+      shell:
+          "systemctl daemon-reload"
+      become: true
+    - name: "Start service"
+      systemd:
+        state: started
+        name: 'consul.service'
+      become: true  
+    - name: 'install required soft (net-tools, python3)'
+      apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 40000
+        name: '{{ item }}'
+        state: 'present'
+      become: true  
+      loop: '{{  program_list }}'
+...

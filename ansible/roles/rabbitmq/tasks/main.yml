@@ -1,0 +1,74 @@
+---
+    - name: "wget erlang"
+      get_url: 
+        url: "https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb"
+        dest: "/home/ubuntu"
+        mode: '774'
+    - name: "install deb"
+      apt:
+        deb: "erlang-solutions_1.0_all.deb"
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 40000
+        state: present
+      become: true
+    - name: "install erlang"
+      apt:
+        name: "erlang"
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 4000
+        state: present
+      become: true
+    - name: "install erlang-nox"
+      apt: 
+        name: "erlang-nox"
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 4000
+        state: present
+      become: true    
+    - name: "shell command"
+      shell: 
+        echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
+    - name: "Add key"
+      apt_key:
+        url: "{{ mqkeypath }}"
+        state: present
+      become: true
+    - name: "install rabbitmq-server"
+      apt:
+        name: rabbitmq-server
+      become: true
+    - name: "Check status rabbitmq's service"
+      systemd: 
+        name: rabbitmq-server
+        state: started
+      become: true
+    - name: "Enable rabbitmq management plugin"
+      shell:
+        rabbitmq-plugins enable rabbitmq_management
+      become: true
+    - name: "Add dbuser"
+      shell: |
+        rabbitmqctl add_user admin password 
+        rabbitmqctl set_user_tags admin administrator
+        rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+      become: true
+    - name: "Check status rabbitmq's service"
+      systemd: 
+        name: "rabbitmq-server"
+        state: started
+        enabled: true
+      become: true
+    - name: 'install required soft (net-tools, python3)'
+      apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 40000
+        name: '{{ item }}'
+        state: 'present'
+      become: true  
+      loop: '{{  program_list }}'
+    
+...

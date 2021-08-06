@@ -1,0 +1,12 @@
+[Unit]
+Description=web-app
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/ng serve --host 0.0.0.0 --port 80 --disable-host-check true
+WorkingDirectory=/home/ubuntu/web-application
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+---
+- hosts: 'tag_Name_Mongo_db'
+  vars:
+    program_list:
+      -  'net-tools'
+      -  'python3'
+  tasks:
+    - name: 'install required soft (net-tools, python3)'
+      apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 40000
+        name: '{{ item }}'
+        state: 'present'
+      become: true  
+      loop: '{{  program_list }}'
+  roles:
+    - role: 'mongodb'
+      tags: Mongo_db
+
+
+      /*private_ip_Mongo = aws_instance.Mongo.private_ip*/
+       #data.mongodb.uri: 'mongodb://${private_ip_Mongo}:27017'
