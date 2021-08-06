@@ -36,5 +36,5 @@ echo "variable "tmplpath$i" {
 
 done < $list2
 
-
+cp temp/var.tf temp/var_temp.tf
 mv temp/var.tf /home/$user/epam_final_project/project_build/variable.tf
