@@ -1,8 +1,9 @@
-- hosts: tag_Name_Mongo_db
+- hosts: tag_Name_Mongo_db_Bastion
   tasks: 
     - name: 'copy ServiceOne files'
       copy:
          src: /home/ruben/Downloads/Consuldemo.pem
          dest: /home/ubuntu/
          mode: '400'
+      become: true
     

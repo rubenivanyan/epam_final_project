@@ -3,6 +3,7 @@
 list1="project_build/templates/script.txt"
 list2="project_build/templates/template.txt"
 user=$(whoami)
+cp temp/var_template.tf temp/var.tf
 
 i=0
 while read script && [ $i -le 0 ];
@@ -36,5 +37,4 @@ echo "variable "tmplpath$i" {
 
 done < $list2
 
-cp temp/var.tf temp/var_temp.tf
 mv temp/var.tf /home/$user/epam_final_project/project_build/variable.tf

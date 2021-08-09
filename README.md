@@ -8,7 +8,7 @@ This is a Microservice sample project. In deployment we use consul, rabbitmq, mo
 
 ## Steps to deploy the project
 1. Clone the repository into your Ubuntu machine, into directory your user (exmample: /home/user/)
-2. Change parameters in ansible.cfg files, ansible running parameters for your own & use your own credentials for connect to your aws account & ec2 instances
+2. Change parameters in ansible.cfg file for your own & move to /etc/ansible/ directory, use your own credentials for connect to your aws account & ec2 instances
 3. Run `customize.sh` bash script for variables customization for your user 
 4. Run `build.sh`
 5. Enjoy !! Your infrastucture will be ready approximately about 30-40 minutes
