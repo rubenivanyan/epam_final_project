@@ -1,10 +1,10 @@
 locals {
   vpc_id                     = module.vpc.vpc_id
-  sec_group_lb_to_ec2_s1     = ["${aws_security_group.s1_lb_sg.id}"]
-  sec_group_lb_to_ec2_s2     = ["${aws_security_group.s2_lb_sg.id}"]
-  sec_group_lb_to_ec2_api    = ["${aws_security_group.api_lb_sg.id}"]
-  sec_group_lb_to_ec2_webapp = ["${aws_security_group.webapp_lb_sg.id}"]
-  sec_group_ec2_to_db        = ["${aws_security_group.main_sg.id}"]
+  sec_group_lb_to_ec2_s1     = [aws_security_group.s1_lb_sg.id]
+  sec_group_lb_to_ec2_s2     = [aws_security_group.s2_lb_sg.id]
+  sec_group_lb_to_ec2_api    = [aws_security_group.api_lb_sg.id]
+  sec_group_lb_to_ec2_webapp = [aws_security_group.webapp_lb_sg.id]
+  sec_group_ec2_to_db        = [aws_security_group.main_sg.id]
 }
 #Create VPC
 module "vpc" {
@@ -15,7 +15,7 @@ module "vpc" {
   cidr                   = "10.10.0.0/16"
   azs                    = ["us-east-1a", "us-east-1b"]
   public_subnets         = ["10.10.10.0/24", "10.10.20.0/24"]
-  private_subnets        = ["10.10.30.0/24", "10.10.40.0/24", "10.10.50.0/24", "10.10.60.0/24"]
+  private_subnets        = ["10.10.30.0/24", "10.10.40.0/24", "10.10.50.0/24", "10.10.60.0/24", "10.10.70.0/24"]
   enable_dns_hostnames   = true
   enable_dns_support     = true
   enable_nat_gateway     = true
@@ -29,12 +29,12 @@ module "vpc" {
 resource "aws_ec2_tag" "mytagS0" {
   resource_id = module.vpc.public_subnets[0]
   key         = "Name"
-  value       = "test"
+  value       = "instances_samples"
 }
 resource "aws_ec2_tag" "mytagS1" {
   resource_id = module.vpc.public_subnets[1]
   key         = "Name"
-  value       = "instances_samples"
+  value       = "test"
 }
 resource "aws_ec2_tag" "mytagS2" {
   resource_id = module.vpc.private_subnets[0]
@@ -44,17 +44,22 @@ resource "aws_ec2_tag" "mytagS2" {
 resource "aws_ec2_tag" "mytagS3" {
   resource_id = module.vpc.private_subnets[1]
   key         = "Name"
-  value       = "DB_subnet"
+  value       = "db_subnet_1"
 }
 resource "aws_ec2_tag" "mytagS4" {
   resource_id = module.vpc.private_subnets[2]
   key         = "Name"
-  value       = "api_gateway"
+  value       = "db_subnet_2"
 }
 resource "aws_ec2_tag" "mytagS5" {
   resource_id = module.vpc.private_subnets[3]
   key         = "Name"
-  value       = "web_application"
+  value       = "backend"
+}
+resource "aws_ec2_tag" "mytagS6" {
+  resource_id = module.vpc.private_subnets[4]
+  key         = "Name"
+  value       = "frontend"
 }
 #Main security group
 resource "aws_security_group" "main_sg" {
@@ -222,7 +227,7 @@ resource "aws_security_group" "SQLdb_sg" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
-}
+}/*
 #Mongo security group
 resource "aws_security_group" "Mongodb_sg" {
   name        = "Mongodb_sg"
@@ -247,4 +252,4 @@ resource "aws_security_group" "Mongodb_sg" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
-}
+}*/

@@ -4,11 +4,11 @@ resource "aws_instance" "Consul" {
   instance_type = "t2.micro"
   key_name      = var.mykey
   subnet_id     = module.vpc.public_subnets[0]
+  vpc_security_group_ids = [aws_security_group.sample_sg.id, aws_security_group.main_sg.id]
   tags = {
     Name  = "Consul"
     Group = "Server"
   }
-  vpc_security_group_ids = [aws_security_group.sample_sg.id, aws_security_group.main_sg.id]
 }
 #Create Consul sample instance
 resource "aws_instance" "RabbitMQ" {
@@ -16,11 +16,11 @@ resource "aws_instance" "RabbitMQ" {
   instance_type = "t2.micro"
   key_name      = var.mykey
   subnet_id     = module.vpc.public_subnets[0]
+  vpc_security_group_ids = [aws_security_group.sample_sg.id, aws_security_group.mq_sg.id]
   tags = {
     Name  = "RabbitMQ"
     Group = "Server"
   }
-  vpc_security_group_ids = [aws_security_group.sample_sg.id, aws_security_group.mq_sg.id]
 }
 #Create aws_instance for db_example
 resource "aws_instance" "db_instance_1" {

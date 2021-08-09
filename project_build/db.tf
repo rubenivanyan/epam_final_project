@@ -7,13 +7,13 @@ resource "aws_db_instance" "default" {
   username               = "user"
   password               = "password"
   skip_final_snapshot    = true
-  vpc_security_group_ids = ["${aws_security_group.SQLdb_sg.id}"]
+  vpc_security_group_ids = [aws_security_group.SQLdb_sg.id]
   db_subnet_group_name   = aws_db_subnet_group.def.name
 }
 #Create subnet group for RDS
 resource "aws_db_subnet_group" "def" {
   name       = "main"
-  subnet_ids = [module.vpc.private_subnets[2], module.vpc.private_subnets[3]]
+  subnet_ids = [module.vpc.private_subnets[1], module.vpc.private_subnets[2]]
 
   tags = {
     Name = "My DB subnet group"

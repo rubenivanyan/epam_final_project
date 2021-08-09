@@ -4,8 +4,8 @@ resource "aws_instance" "consul" {
   instance_type          = "t2.micro"
   key_name               = var.mykey
   vpc_security_group_ids = ["${aws_security_group.main_sg.id}"]
-  subnet_id              = module.vpc.public_subnets[1]
-  #subnet_id              = module.vpc.private_subnets[2]
+  #subnet_id              = module.vpc.public_subnets[1]
+  subnet_id = module.vpc.private_subnets[0]
   tags = {
     Name = "Consul"
   }
@@ -17,10 +17,10 @@ resource "aws_instance" "rabbitmq" {
   instance_type          = "t2.micro"
   key_name               = var.mykey
   vpc_security_group_ids = ["${aws_security_group.mq_sg.id}"]
-  subnet_id              = module.vpc.public_subnets[1]
-  #subnet_id              = module.vpc.private_subnets[2]
+  #subnet_id              = module.vpc.public_subnets[1]
+  subnet_id = module.vpc.private_subnets[0]
   tags = {
     Name = "RabbitMQ"
   }
-  user_data = file(var.scriptpath7)
+  user_data = file(var.scriptpath6)
 }

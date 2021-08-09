@@ -11,7 +11,6 @@ resource "aws_launch_configuration" "serviceone" {
   }
   user_data = file(var.scriptpath1)
 }
-
 #Create Launch config for ServiceTwo
 resource "aws_launch_configuration" "servicetwo" {
   name_prefix                 = "lc2"
@@ -62,7 +61,7 @@ resource "aws_autoscaling_group" "serviceone_asg" {
   desired_capacity          = 2
   force_delete              = true
   launch_configuration      = aws_launch_configuration.serviceone.name
-  vpc_zone_identifier       = [module.vpc.private_subnets[0]]
+  vpc_zone_identifier       = [module.vpc.private_subnets[3]]
   tags = (
     [
       {
@@ -83,7 +82,7 @@ resource "aws_autoscaling_group" "servicetwo_asg" {
   desired_capacity          = 2
   force_delete              = true
   launch_configuration      = aws_launch_configuration.servicetwo.name
-  vpc_zone_identifier       = [module.vpc.private_subnets[1]]
+  vpc_zone_identifier       = [module.vpc.private_subnets[3]]
   tags = (
     [
       {
@@ -134,7 +133,7 @@ resource "aws_autoscaling_group" "webapp_asg" {
   desired_capacity          = 2
   force_delete              = true
   launch_configuration      = aws_launch_configuration.webapp.name
-  vpc_zone_identifier       = [module.vpc.private_subnets[3]]
+  vpc_zone_identifier       = [module.vpc.private_subnets[4]]
   tags = (
     [
       {

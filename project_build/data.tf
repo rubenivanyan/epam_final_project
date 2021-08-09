@@ -1,3 +1,5 @@
+#Get aws_account username id
+data "aws_caller_identity" "current" {}
 #Dataset from ServiceOne image
 data "aws_ami" "ubuntu1" {
   most_recent = true
@@ -12,7 +14,7 @@ data "aws_ami" "ubuntu1" {
     values = ["hvm"]
   }
 
-  owners = ["001132765488"] # Canonical
+  owners = [data.aws_caller_identity.current.account_id] # MySelf
   depends_on = [
     aws_ami_from_instance.example1
   ]
@@ -31,7 +33,7 @@ data "aws_ami" "ubuntu2" {
     values = ["hvm"]
   }
 
-  owners = ["001132765488"] # MySelf
+  owners = [data.aws_caller_identity.current.account_id] # MySelf
   depends_on = [
     aws_ami_from_instance.example2
   ]
@@ -50,7 +52,7 @@ data "aws_ami" "ubuntu3" {
     values = ["hvm"]
   }
 
-  owners = ["001132765488"] # MySelf
+  owners = [data.aws_caller_identity.current.account_id] # MySelf
   depends_on = [
     aws_ami_from_instance.example3
   ]
@@ -69,12 +71,12 @@ data "aws_ami" "ubuntu4" {
     values = ["hvm"]
   }
 
-  owners = ["001132765488"] # MySelf
+  owners = [data.aws_caller_identity.current.account_id] # MySelf
   depends_on = [
     aws_ami_from_instance.example4
   ]
 } /*
-#Dataset from ApiGateway image
+#Dataset from Mongo_db image
 data "aws_ami" "ubuntu5" {
   most_recent = true
 
@@ -88,7 +90,7 @@ data "aws_ami" "ubuntu5" {
     values = ["hvm"]
   }
 
-  owners = ["001132765488"] # MySelf
+  owners = [data.aws_caller_identity.current.account_id] # MySelf
 }*/
 #Dataset from ApiGateway image
 data "aws_ami" "ubuntu6" {
@@ -104,7 +106,7 @@ data "aws_ami" "ubuntu6" {
     values = ["hvm"]
   }
 
-  owners = ["001132765488"] # MySelf
+  owners = [data.aws_caller_identity.current.account_id] # MySelf
   depends_on = [
     aws_ami_from_instance.example6
   ]
@@ -123,7 +125,7 @@ data "aws_ami" "ubuntu7" {
     values = ["hvm"]
   }
 
-  owners = ["001132765488"] # MySelf
+  owners = [data.aws_caller_identity.current.account_id] # MySelf
   depends_on = [
     aws_ami_from_instance.example7
   ]

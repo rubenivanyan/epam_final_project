@@ -10,55 +10,55 @@ variable "health_check_path3" {
   type    = string
   default = "/"
 }
-variable "cred" {
-  type    = string
-  default = "/home/ruben/credentials"
-}
 variable "mykey" {
   type    = string
   default = "Consuldemo"
 }
-variable scriptpath1 {
+variable "cred" {
+  type    = string
+  default = "/home/ruben/credentials"
+}
+variable "scriptpath1" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/scripts/S1.sh"
 }
-variable scriptpath2 {
+variable "scriptpath2" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/scripts/S2.sh"
 }
-variable scriptpath3 {
+variable "scriptpath3" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/scripts/S3.sh"
 }
-variable scriptpath4 {
+variable "scriptpath4" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/scripts/webapp.sh"
 }
-variable scriptpath5 {
+variable "scriptpath5" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/scripts/consul.sh"
 }
-variable scriptpath6 {
+variable "scriptpath6" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/scripts/rabbit.sh"
 }
-variable scriptpath7 {
+variable "scriptpath7" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/scripts/mongo.sh"
 }
-variable tmplpath1 {
+variable "tmplpath1" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/templates/serviceone.template"
-} 
-variable tmplpath2 {
+}
+variable "tmplpath2" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/templates/servicetwo.template"
-} 
-variable tmplpath3 {
+}
+variable "tmplpath3" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/templates/api.template"
-} 
-variable tmplpath4 {
+}
+variable "tmplpath4" {
   type    = string
   default = "/home/ruben/epam_final_project/project_build/templates/constants.template"
-} 
+}
