@@ -4,4 +4,5 @@ user: ''
 consulkeypath: "https://apt.releases.hashicorp.com/gpg"
 debrepo: "deb [arch=amd64] https://apt.releases.hashicorp.com focal main"
 program_list:
+  - consul
   - net-tools

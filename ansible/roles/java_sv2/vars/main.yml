@@ -1,19 +1,10 @@
 ---
 # vars file for java
+user: ''
 copyfile:
   - servicetwo.yaml
-script:
-  - S2.sh
 app2: 
   - doc
   - src
   - pom.xml
   - service-two.iml
-services:
-  - servicetwo.service
-program_list:
-  - net-tools
-  - python3
-  - openjdk-8-jdk
-  - maven
-user: ''

@@ -1,0 +1,23 @@
+---
+
+user: ''
+userdir: /home/ubuntu/
+systemservicepath: /etc/systemd/system/
+libservicepath: /lib/systemd/system/
+programs: 
+  - net-tools
+  - openjdk-8-jdk
+  - maven
+scripts:
+  - consul.sh
+  - rabbit.sh
+  - S1.sh
+  - S2.sh
+  - S3.sh
+  - webapp.sh
+services:
+  - api-gateway.service
+  - consul.service
+  - serviceone.service
+  - servicetwo.service
+  - web-app.service

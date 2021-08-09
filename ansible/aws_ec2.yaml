@@ -21,7 +21,7 @@ filters:
   tag:Name:
     - Consul
     - RabbitMQ
-    - Mongo_db
+    - Mongo_db/Bastion
     - ServiceOne
     - ServiceTwo
     - ApiGateway

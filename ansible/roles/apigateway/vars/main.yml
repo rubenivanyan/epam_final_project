@@ -1,14 +1,5 @@
 ---
 # vars file for java
+user: ''
 copyfile:
   - api.yaml
-script:
-  - S3.sh
-services:
-  - api-gateway.service
-program_list:
-  - net-tools
-  - python3
-  - openjdk-8-jdk
-  - maven
-user: ''

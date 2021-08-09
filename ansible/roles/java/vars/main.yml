@@ -1,20 +1,11 @@
 ---
 # vars file for java
+user: ''
 copyfile:
   - serviceone.yaml
-script:
-  - S1.sh
 app1:
   - doc
   - src
   - pom.xml
   - service-one.iml
-services:
-  - serviceone.service
-user: ''
-program_list:
-  - net-tools
-  - python3
-  - openjdk-8-jdk
-  - maven
 ...

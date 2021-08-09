@@ -11,25 +11,25 @@
       become: true
     - name: "copy project files"
       copy:
-        src: /home/{{ user.stdout }}/epam_final_project/project_samples/web-application/{{item}}
-        dest: /home/ubuntu/web-application 
+        src: "/home/{{ user.stdout }}/epam_final_project/project_samples/web-application/{{item}}"
+        dest: "{{ userdir }}web-application"
       loop: '{{ app }}'  
     - name: "Copy webapp_proj_api_gateway_config"
       copy:
-        src: /home/{{ user.stdout }}/epam_final_project/temp/constants.ts
-        dest: /home/ubuntu/web-application/src/app
+        src: "/home/{{ user.stdout }}/epam_final_project/temp/constants.ts"
+        dest: "{{ userdir }}web-application/src/app"
         mode: '774'
       become: true
     - name: "copy script"
       copy :
-        src: /home/{{ user.stdout }}/epam_final_project/project_build/scripts/webapp.sh
-        dest: /home/ubuntu/web-application/
+        src: "/home/{{ user.stdout }}/epam_final_project/project_build/scripts/{{ scripts[5] }}"
+        dest: "{{ userdir }}web-application/"
         mode: '774'
       become: true
     - name: "Copy service"
       copy:
-        src: /home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/web-app.service
-        dest: /lib/systemd/system
+        src: "/home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/{{ services[4] }}"
+        dest: "{{ libservicepath }}web-app.service"
       become: true
     - name: "install npm package manager"
       apt:
@@ -38,7 +38,7 @@
         update_cache: true
       become: true
     - name: "Prepare for installation"
-      shell: "cd /home/ubuntu/web-application/"
+      shell: "cd {{ userdir }}web-application/"
       become: true 
     - name: "update & upgrade"
       shell: "apt update -y && apt upgrade -y"
@@ -54,7 +54,7 @@
       npm:
         name: "n"
         global: yes
-        state: "present"
+        state: present
       become: true
     - name: "Makes version-management easy"
       shell:
@@ -62,11 +62,6 @@
       become: true
     - name: "Install angularCLI"
       command: "echo n | npm install -g --silent @angular/cli@12.1.4"
-      become: true
-    - name: "Copy service"
-      copy:
-        src: /home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/web-app.service
-        dest: /lib/systemd/system
       become: true
     - name: "Reload daemon"
       shell: "systemctl daemon-reload"

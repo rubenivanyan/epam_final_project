@@ -1,39 +1,37 @@
 ---
 # tasks file for apigateway
-    - name: 'install required soft (net-tools, python3, java)'
+    - name: "Get the hosts username"
+      become: false
+      local_action: 'command whoami'
+      register: 'user'
+    - name: "install required soft (net-tools, java, maven)"
       apt:
         update_cache: true
         force_apt_get: true
         cache_valid_time: 40000
         name: '{{ item }}'
-        state: 'present'
+        state: present
       become: true  
-      loop: '{{  program_list }}'
-    - name: 'Get the hosts username'
-      become: 'false'
-      local_action: 'command whoami'
-      register: 'user'
-    - name: 'api'
+      loop: '{{  programs }}'
+    - name: "copy api-gateway sample files"
       copy: 
         src: "/home/{{ user.stdout }}/epam_final_project/project_samples/api-gateway/"
-        dest: "/home/ubuntu/api-gateway"
+        dest: "{{ userdir }}api-gateway"
       become: true
-    - name: 'copy template'
+    - name: "copy template"
       copy: 
-        src: '/home/{{ user.stdout }}/epam_final_project/temp/{{item}}'
-        dest: "/home/ubuntu/"
+        src: "/home/{{ user.stdout }}/epam_final_project/temp/{{item}}"
+        dest: "{{ userdir }}"
         mode: '0770'
       loop: '{{ copyfile }}'
-    - name: 'copy script'
+    - name: "copy script"
       copy: 
-        src: '/home/{{ user.stdout }}/epam_final_project/project_build/scripts/{{item}}'
-        dest: "/home/ubuntu/"
+        src: "/home/{{ user.stdout }}/epam_final_project/project_build/scripts/{{ scripts[4] }}"
+        dest: "{{ userdir }}"
         mode: '0770'
-      loop: '{{ script }}'
-    - name: 'copy service'
+    - name: "copy service"
       copy: 
-        src: "/home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/{{item}}"
-        dest: "/etc/systemd/system/"
-      loop: '{{services}}'
+        src: "/home/{{ user.stdout }}/epam_final_project/project_build/servicesfiles/{{ services[0] }}"
+        dest: "{{ systemservicepath }}"
       become: true 
 ...

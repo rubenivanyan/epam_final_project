@@ -1,5 +1,4 @@
 ---
 # vars file for mongodb
-user: ''
 mongokeypath: "https://www.mongodb.org/static/pgp/server-4.4.asc"
 debrepo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse"

@@ -1,6 +1,6 @@
 ---
 # vars file for rabbitmq
-user: ''
 mqkeypath: "https://www.rabbitmq.com/rabbitmq-release-signing-key.asc"
 program_list:
+  - rabbitmq-server
   - net-tools
